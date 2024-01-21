@@ -43,7 +43,7 @@ pipeline {
    }
    stage('Build mysql image') {
      steps{
-        docker.withRegistry( 'https://index.docker.io/v1/',credentialsId: "vivekjenkins" ) {
+         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
        sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
         
         sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
