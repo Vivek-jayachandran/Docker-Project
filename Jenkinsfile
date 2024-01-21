@@ -27,7 +27,7 @@ pipeline {
     steps {
         script {
              withDockerRegistry([ credentialsId: "vivekjenkins1", url: "https://registry.hub.docker.com"]) {
-                dockerImage.push()
+                dockerImage.push("flask")
             }
         }
     }
