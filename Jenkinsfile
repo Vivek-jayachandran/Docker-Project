@@ -11,7 +11,7 @@ pipeline {
   
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/mgsgoms/Docker-Project.git'
+        git 'https://github.com/Vivek-jayachandran/Docker-Project'
       }
     }
 
@@ -26,7 +26,7 @@ pipeline {
     stage('Push Image') {
       steps{
         script {
-          docker.withRegistry( "" ) {
+          docker.withRegistry( 'https://index.docker.io/v1/',credentialsId: "vivekjenkins" ) {
             dockerImage.push()
           }
         }
@@ -42,10 +42,13 @@ pipeline {
    }
    stage('Build mysql image') {
      steps{
-       sh 'docker build -t "10.138.0.3:5001/mgsgoms/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
-        sh 'docker push "10.138.0.3:5001/mgsgoms/mysql:$BUILD_NUMBER"'
+        docker.withRegistry( 'https://index.docker.io/v1/',credentialsId: "vivekjenkins" ) {
+       sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
+        
+        sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
         }
       }
+   }
     stage('Deploy App') {
       steps {
         script {
