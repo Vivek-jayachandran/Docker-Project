@@ -24,14 +24,14 @@ pipeline {
     }
 
     stage('Push Image') {
-      steps{
+    steps {
         script {
-            withDockerRegistry([ credentialsId: 'vivekjenkins1', url: "" ]) {
-            dockerImage.push()
-          }
+            withDockerRegistry([credentialsId: 'vivekjenkins1', url: '']) {
+                dockerImage.push()
+            }
         }
-      }
     }
+}
 
     stage('current') {
       steps{
