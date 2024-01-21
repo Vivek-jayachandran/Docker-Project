@@ -1,8 +1,8 @@
 pipeline {
 
   environment {
-    registry = "docker.io/vivekdevopsfree/flask"
-    registry_mysql = "docker.io/vivekdevopsfree/mysql"
+    registry = "vivekdevopsfree/flask"
+    registry_mysql = "vivekdevopsfree/mysql"
     dockerImage = ""
   }
 
@@ -26,7 +26,7 @@ pipeline {
     stage('Push Image') {
     steps {
         script {
-             withDockerRegistry([ credentialsId: "vivekjenkins1", url: "https://registry-1.docker.io/v2/"]) {
+             withDockerRegistry([ credentialsId: "vivekjenkins", url: ""]) {
                 dockerImage.push("")
             }
         }
@@ -42,7 +42,7 @@ pipeline {
    }
    stage('Build mysql image') {
      steps{
-         withDockerRegistry([ credentialsId: "vivekjenkins1", url: "" ]) {
+         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
        sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
         
         sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
