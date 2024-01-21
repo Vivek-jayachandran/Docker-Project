@@ -26,8 +26,7 @@ pipeline {
     stage('Push Image') {
       steps{
         script {
-          //docker.withRegistry( 'https://index.docker.io/v1/',credentialsId: "vivekjenkins" ) {
-            withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
+            withDockerRegistry([ credentialsId: "vivekjenkins1", url: "" ]) {
             dockerImage.push()
           }
         }
@@ -43,7 +42,7 @@ pipeline {
    }
    stage('Build mysql image') {
      steps{
-         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
+         withDockerRegistry([ credentialsId: "vivekjenkins1", url: "" ]) {
        sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
         
         sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
