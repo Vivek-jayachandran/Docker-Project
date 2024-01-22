@@ -22,6 +22,16 @@ pipeline {
         }
       }
     }
+      
+      stage('Test Credentials') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'vivekjenkins', variable: 'MY_SECRET')]) {
+                        echo "Credentials: $MY_SECRET"
+                    }
+                }
+            }
+        }
 
     stage('Push Image') {
     steps {
