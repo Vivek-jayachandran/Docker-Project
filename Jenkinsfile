@@ -42,39 +42,15 @@ pipeline {
     stage('Push Image') {
     steps {
         script {
-             withDockerRegistry([ credentialsId: "vivekjenkins", url: ""]) {
-               //echo "Credentials found. Pushing Docker image..."
-               //sh "echo 'Credentials: $MY_SECRET'"
-               dockerImage.push()    
+            
+       sh 'docker push "vivekdevopsfree/flask:$BUILD_NUMBER"'
                   
-            }
+            
         }
     }
 }
 
-    stage('current') {
-      steps{
-        dir("${env.WORKSPACE}/mysql"){
-          sh "pwd"
-          }
-      }
-   }
-   stage('Build mysql image') {
-     steps{
-         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
-       sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
-        
-        sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
-        }
-      }
-   }
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "frontend.yaml", kubeconfigId: "kube1")
-        }
-      }
-    }
+
 
   }
 
