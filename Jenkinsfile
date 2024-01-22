@@ -22,7 +22,7 @@ pipeline {
         }
       }
     }
-      stage('Build image') {
+      stage('Build image1') {
       steps{
         script {
           dockerImage = docker.build registry_mysql + ":$BUILD_NUMBER"
