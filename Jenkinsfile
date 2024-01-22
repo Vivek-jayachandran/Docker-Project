@@ -23,15 +23,21 @@ pipeline {
       }
     }
       
-      stage('Test Credentials') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'vivekjenkins', variable: 'MY_SECRET')]) {
-                        echo "Credentials: $MY_SECRET"
-                    }
+     stage('Test Credentials') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'vivekjenkins', variable: 'DOCKERHUB_TOKEN')]) {
+                def response = sh(script: 'docker login -u vivekdevopsfree -p $DOCKERHUB_TOKEN', returnStatus: true)
+                
+                if (response == 0) {
+                    echo "DockerHub login successful"
+                } else {
+                    error "DockerHub login failed"
                 }
             }
         }
+    }
+}
 
     stage('Push Image') {
     steps {
