@@ -29,7 +29,7 @@ pipeline {
              withDockerRegistry([ credentialsId: "vivekjenkins", url: ""]) {
                //echo "Credentials found. Pushing Docker image..."
                //sh "echo 'Credentials: $MY_SECRET'"
-               sh 'docker push "vivekdevopsfree/flask:$BUILD_NUMBER"'
+               dockerImage.push()    
                   
             }
         }
