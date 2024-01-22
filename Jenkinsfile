@@ -27,6 +27,7 @@ pipeline {
     steps {
         script {
              withDockerRegistry([ credentialsId: "vivekjenkins", url: ""]) {
+               sh "echo 'Credentials: $MY_SECRET'"
                 dockerImage.push("")
             }
         }
