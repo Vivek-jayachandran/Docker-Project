@@ -50,7 +50,7 @@ pipeline {
     }
 }
 
-    stage('Push Image') {
+    stage('Push sqlImage') {
     steps {
         script {
             
