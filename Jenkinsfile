@@ -22,7 +22,13 @@ pipeline {
         }
       }
     }
-      
+      stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build registry_mysql + ":$BUILD_NUMBER"
+        }
+      }
+    }
      stage('Test Credentials') {
     steps {
         script {
@@ -49,14 +55,7 @@ pipeline {
         }
     }
 }
-stage('Build mysql image') {
-     steps{
-         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
-       sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
-        
-        }
-      }
-   }
+
     stage('Push sqlImage') {
     steps {
         script {
