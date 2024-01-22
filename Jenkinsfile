@@ -50,11 +50,11 @@ pipeline {
     }
 }
 
-        stage('Push Image') {
+    stage('Push Image') {
     steps {
         script {
             
-       sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
+      sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
                   
             
         }
