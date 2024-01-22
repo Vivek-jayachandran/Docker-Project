@@ -50,6 +50,17 @@ pipeline {
     }
 }
 
+        stage('Push Image') {
+    steps {
+        script {
+            
+       sh 'docker push "vivekdevopsfree/mysql:$BUILD_NUMBER"'
+                  
+            
+        }
+    }
+}
+
 
 
   }
