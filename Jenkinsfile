@@ -49,7 +49,14 @@ pipeline {
         }
     }
 }
-
+stage('Build mysql image') {
+     steps{
+         withDockerRegistry([ credentialsId: "vivekjenkins", url: "" ]) {
+       sh 'docker build -t "vivekdevopsfree/mysql:$BUILD_NUMBER"  "$WORKSPACE"/mysql'
+        
+        }
+      }
+   }
     stage('Push sqlImage') {
     steps {
         script {
