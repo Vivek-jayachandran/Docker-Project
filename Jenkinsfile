@@ -62,18 +62,25 @@ pipeline {
             }
         }
 
-        stage('Deploy App') {
-            steps {
-                script {
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "frontend.yaml", kubeconfigId: "kube2")
+        }
+      }
+    }
+        //stage('Deploy App') {
+           // steps {
+               // script {
                     // Assuming you have a Kubernetes configuration file (kubeconfig)
-                    def kubeconfig = credentials('kube1')  // Replace 'kubeconfig-id' with your actual credential ID
-                    echo "Kubeconfig: ${kubeconfig}"
+                  //  def kubeconfig = credentials('kube1')  // Replace 'kubeconfig-id' with your actual credential ID
+                   // echo "Kubeconfig: ${kubeconfig}"
 
                     // Apply the Kubernetes manifests
-                    sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
-                }
-            }
-        }
+                    //sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                //}
+           // }
+        //}
     }
 }
 
