@@ -82,24 +82,26 @@ pipeline {
            //}
         //}
      
+    stages {
         stage('Deploy App') {
             steps {
                 script {
-                    // Assuming you have a Kubernetes configuration file (kubeconfig)
-                    def kubeconfig = credentials('kube1')  // Replace 'kube1' with your actual credential ID
-                    echo "Kubeconfig: ${kubeconfig}"
-                    
-                    // Check if kubeconfig is not null
-                    if (kubeconfig != null) {
+                    // Retrieve the kubeconfig from the credentials
+                    def kubeconfigSecret = credentials('kube1')  // Replace 'kube1' with your actual credential ID
+                    def kubeconfigPath = writeFile(file: 'kubeconfig', text: kubeconfigSecret).trim()
+                    echo "Kubeconfig Path: ${kubeconfigPath}"
+
+                    // Check if kubeconfigPath is not null
+                    if (kubeconfigPath != '') {
                         // Apply the Kubernetes manifests
-                       sh "kubectl --kubeconfig='${kubeconfig}' apply -f frontend.yaml"
+                        sh "kubectl apply --kubeconfig=${kubeconfigPath} -f frontend.yaml"
                     } else {
                         error "Failed to retrieve kubeconfig credentials"
                     }
                 }
             }
-       
-}
+        }
+
 
     }
 }
