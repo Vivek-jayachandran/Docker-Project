@@ -69,18 +69,42 @@ pipeline {
         //}
       //}
     //}
+        //stage('Deploy App') {
+            //steps {
+                //script {
+                    // Assuming you have a Kubernetes configuration file (kubeconfig)
+                   //def kubeconfig = credentials('kube1')  // Replace 'kubeconfig-id' with your actual credential ID
+                    //echo "Kubeconfig: ${kubeconfig}"
+
+                    // Apply the Kubernetes manifests
+                    //sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                //}
+           //}
+        //}
+        pipeline {
+    agent any
+    
+    stages {
         stage('Deploy App') {
             steps {
                 script {
                     // Assuming you have a Kubernetes configuration file (kubeconfig)
-                   def kubeconfig = credentials('kube1')  // Replace 'kubeconfig-id' with your actual credential ID
+                    def kubeconfig = credentials('kube1')  // Replace 'kube1' with your actual credential ID
                     echo "Kubeconfig: ${kubeconfig}"
-
-                    // Apply the Kubernetes manifests
-                    sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                    
+                    // Check if kubeconfig is not null
+                    if (kubeconfig != null) {
+                        // Apply the Kubernetes manifests
+                        sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                    } else {
+                        error "Failed to retrieve kubeconfig credentials"
+                    }
                 }
-           }
+            }
         }
+    }
+}
+
     }
 }
 
