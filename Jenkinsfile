@@ -62,22 +62,26 @@ pipeline {
             }
         }
 
-        stage('Deploy App') {
-    steps {
+  stage('Deploy App') {
+      steps {
         script {
-            echo "KUBECONFIG_PATH: ${env.KUBECONFIG_PATH}"
-            withCredentials([string(credentialsId: 'kube1', variable: 'KUBECONFIG_PATH')]) {
-                // Check if KUBECONFIG_PATH is not empty
-                if (env.KUBECONFIG_PATH != '') {
-                    // Apply the Kubernetes manifests
-                    sh "kubectl apply --kubeconfig=${env.KUBECONFIG_PATH} -f frontend.yaml"
-                } else {
-                    error "Failed to retrieve kubeconfig credentials"
-                }
-            }
-        }
+          kubernetesDeploy(configs: "frontend.yaml", kubeconfigId: "kube2")
+         }
+      }
     }
-}
+        //stage('Deploy App') {
+            //steps {
+                //script {
+                    // Assuming you have a Kubernetes configuration file (kubeconfig)
+                   //def kubeconfig = credentials('kube1')  // Replace 'kubeconfig-id' with your actual credential ID
+                    //echo "Kubeconfig: ${kubeconfig}"
+
+                    // Apply the Kubernetes manifests
+                    //sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                //}
+           //}
+        //}
+     
 
     }
 }
