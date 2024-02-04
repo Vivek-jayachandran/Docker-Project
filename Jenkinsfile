@@ -64,17 +64,18 @@ pipeline {
 
         stage('Deploy App') {
             steps {
-                withCredentials([string(credentialsId: 'kube1', variable: 'KUBECONFIG_PATH')]) {
-                    // Check if KUBECONFIG_PATH is not empty
-                    if (env.KUBECONFIG_PATH != '') {
-                        // Apply the Kubernetes manifests
-                        sh "kubectl apply --kubeconfig=${env.KUBECONFIG_PATH} -f frontend.yaml"
-                    } else {
-                        error "Failed to retrieve kubeconfig credentials"
+                script {
+                    withCredentials([string(credentialsId: 'kube1', variable: 'KUBECONFIG_PATH')]) {
+                        // Check if KUBECONFIG_PATH is not empty
+                        if (env.KUBECONFIG_PATH != '') {
+                            // Apply the Kubernetes manifests
+                            sh "kubectl apply --kubeconfig=${env.KUBECONFIG_PATH} -f frontend.yaml"
+                        } else {
+                            error "Failed to retrieve kubeconfig credentials"
+                        }
                     }
                 }
             }
         }
     }
 }
-
