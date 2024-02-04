@@ -92,7 +92,7 @@ pipeline {
                     // Check if kubeconfig is not null
                     if (kubeconfig != null) {
                         // Apply the Kubernetes manifests
-                        sh "kubectl --kubeconfig=${kubeconfig} apply -f frontend.yaml"
+                       sh "kubectl --kubeconfig='${kubeconfig}' apply -f frontend.yaml"
                     } else {
                         error "Failed to retrieve kubeconfig credentials"
                     }
