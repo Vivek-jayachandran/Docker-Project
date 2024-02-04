@@ -82,7 +82,7 @@ pipeline {
            //}
         //}
      
-    stages {
+   
         stage('Deploy App') {
             steps {
                 script {
@@ -101,7 +101,7 @@ pipeline {
                 }
             }
         }
-
+    
 
     }
 }
