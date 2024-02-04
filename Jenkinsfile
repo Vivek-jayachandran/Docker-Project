@@ -81,10 +81,7 @@ pipeline {
                 //}
            //}
         //}
-        pipeline {
-    agent any
-    
-    stages {
+     
         stage('Deploy App') {
             steps {
                 script {
@@ -101,8 +98,7 @@ pipeline {
                     }
                 }
             }
-        }
-    }
+       
 }
 
     }
