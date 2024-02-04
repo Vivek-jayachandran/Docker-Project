@@ -69,7 +69,7 @@ pipeline {
                         // Check if KUBECONFIG_PATH is not empty
                         if (env.KUBECONFIG_PATH != '') {
                             // Apply the Kubernetes manifests
-                            sh "kubectl apply --kubeconfig=${env.KUBECONFIG_PATH} -f frontend.yaml"
+                            sh "kubectl apply -f --kubeconfig=${env.KUBECONFIG_PATH} -f frontend.yaml"
                         } else {
                             error "Failed to retrieve kubeconfig credentials"
                         }
