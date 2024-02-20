@@ -46,13 +46,13 @@ pipeline {
             }
         }
 
-        stage('Push Image') {
-            steps {
-                script {
-                    sh 'docker push "vivekdevopsfree/flask:$BUILD_NUMBER"'
-                }
-            }
-        }
+        //stage('Push Image') {
+            //steps {
+                //script {
+                   // sh 'docker push "vivekdevopsfree/flask:$BUILD_NUMBER"'
+               // }
+            //}
+        //}
 
         stage('Push sqlImage') {
             steps {
